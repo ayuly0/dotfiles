@@ -65,7 +65,7 @@ vim.keymap.set("n", "<C-=>", function()
   change_font_size(1)
 end, { desc = "Zoom in" })
 vim.keymap.set("n", "<C-->", function()
-  change_font_size(-1)
+  change_font_size(-0.5)
 end, { desc = "Zoom out" })
 vim.keymap.set("n", "<C-0>", function()
   set_font_size(12)
@@ -75,3 +75,15 @@ vim.keymap.set("n", "<leader>tt", function()
   vim.o.showtabline = (vim.o.showtabline == 0) and 2 or 0
   print("Tabline is now", vim.o.showtabline == 0 and "OFF" or "ON")
 end, { desc = "Toggle Neovim tabline" })
+
+local opts = { noremap = true, silent = true }
+
+vim.keymap.set("n", "<C-j>", function()
+  vim.cmd "cnext"
+  vim.cmd "copen"
+end, opts)
+
+vim.keymap.set("n", "<C-k>", function()
+  vim.cmd "cprev"
+  vim.cmd "copen"
+end, opts)

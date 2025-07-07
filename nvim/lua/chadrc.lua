@@ -10,15 +10,22 @@ M.base46 = {
 
   hl_override = {
     Comment = { italic = true },
+    Type = { italic = true },
     ["@comment"] = { italic = true },
+    ["@type"] = { italic = true },
   },
 }
 
--- M.nvdash = { load_on_startup = true }
--- M.ui = {
---       tabufline = {
---          lazyload = false
---      }
---}
+M.nvdash = { load_on_startup = true }
+M.ui = {
+  statusline = {
+    enabled = true,
+    theme = "minimal",
+    separator_style = "round",
+  },
+  --  tabufline = {
+  --     lazyload = false
+  -- }
+}
 
 return M

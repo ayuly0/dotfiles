@@ -249,4 +249,53 @@ return {
       }
     end,
   },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
+    ft = { "markdown" },
+    opts = {},
+    config = function()
+      require("render-markdown").setup {
+        completions = { blink = { enabled = true } },
+        heading = {
+          position = "inline",
+          enabled = true,
+          render_modes = false,
+          atx = true,
+          setext = true,
+          sign = true,
+          above = "▄",
+          below = "▀",
+          backgrounds = {
+            "RenderMarkdownH1Bg",
+            "RenderMarkdownH2Bg",
+            "RenderMarkdownH3Bg",
+            "RenderMarkdownH4Bg",
+            "RenderMarkdownH5Bg",
+            "RenderMarkdownH6Bg",
+          },
+          foregrounds = {
+            "RenderMarkdownH1",
+            "RenderMarkdownH2",
+            "RenderMarkdownH3",
+            "RenderMarkdownH4",
+            "RenderMarkdownH5",
+            "RenderMarkdownH6",
+          },
+        },
+        indent = {
+          enabled = false,
+          render_modes = false,
+          per_level = 2,
+          skip_level = 1,
+          skip_heading = false,
+          icon = "▎",
+          highlight = "RenderMarkdownIndent",
+        },
+        pipe_table = { preset = "round" },
+        bullet = { icons = { "", "" } },
+      }
+      require("render-markdown").enable()
+    end,
+  },
 }
