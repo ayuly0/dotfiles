@@ -1,0 +1,106 @@
+{
+  "bar.customModules.updates.pollingInterval": 1440000,
+  "theme.font.size": "1rem",
+  "theme.bar.floating": true,
+  "theme.bar.location": "top",
+  "theme.bar.buttons.enableBorders": true,
+  "theme.bar.buttons.borderSize": "0.03em",
+  "theme.bar.buttons.y_margins": "0.4em",
+  "wallpaper.image": "/home/ayuly/Pictures/Background/frieren-1.jpg",
+  "menus.clock.time.military": true,
+  "menus.clock.weather.key": "5d2219e8a47044c6afd124223251906",
+  "menus.clock.weather.location": "Hanoi",
+  "menus.clock.weather.unit": "metric",
+  "menus.dashboard.powermenu.avatar.image": "/home/ayuly/Pictures/AvtPic/85594469.png",
+  "theme.bar.menus.menu.dashboard.profile.radius": "0.5em",
+  "menus.dashboard.shortcuts.left.shortcut1.tooltip": "Brave",
+  "menus.dashboard.shortcuts.left.shortcut1.command": "brave-browser",
+  "menus.dashboard.shortcuts.left.shortcut3.command": "/home/ayuly/Downloads/Telegram/Telegram",
+  "menus.dashboard.shortcuts.left.shortcut3.icon": "",
+  "menus.dashboard.shortcuts.left.shortcut3.tooltip": "Telegram",
+  "menus.dashboard.shortcuts.left.shortcut2.tooltip": "Obsidian",
+  "menus.dashboard.shortcuts.left.shortcut2.icon": "",
+  "menus.dashboard.shortcuts.left.shortcut2.command": "obsidian",
+  "bar.workspaces.show_icons": true,
+  "bar.workspaces.show_numbered": false,
+  "bar.workspaces.numbered_active_indicator": "underline",
+  "bar.workspaces.workspaces": 10,
+  "bar.network.label": false,
+  "bar.network.truncation": false,
+  "bar.network.truncation_size": 7,
+  "bar.bluetooth.label": false,
+  "bar.battery.hideLabelWhenFull": true,
+  "theme.bar.buttons.systray.enableBorder": true,
+  "theme.bar.buttons.media.enableBorder": false,
+  "bar.media.show_artist": false,
+  "bar.media.show_active_only": true,
+  "bar.notifications.show_total": false,
+  "bar.notifications.hideCountWhenZero": true,
+  "bar.clock.format": "%a %d/%m %H:%M",
+  "bar.clock.showIcon": true,
+  "bar.volume.label": false,
+  "theme.bar.buttons.network.enableBorder": false,
+  "bar.battery.label": true,
+  "menus.transition": "crossfade",
+  "bar.layouts": {
+    "0": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "network",
+        "battery",
+        "systray",
+        "clock",
+        "notifications",
+        "power"
+      ]
+    },
+    "1": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "clock",
+        "notifications"
+      ]
+    },
+    "2": {
+      "left": [
+        "dashboard",
+        "workspaces",
+        "windowtitle"
+      ],
+      "middle": [
+        "media"
+      ],
+      "right": [
+        "volume",
+        "clock",
+        "notifications"
+      ]
+    }
+  },
+  "bar.customModules.netstat.rateUnit": "auto",
+  "bar.customModules.netstat.labelType": "full",
+  "bar.customModules.cpu.label": true,
+  "bar.customModules.cpu.round": true,
+  "bar.customModules.storage.labelType": "used",
+  "bar.customModules.storage.round": true,
+  "tear": false,
+  "theme.bar.margin_sides": "0em",
+  "theme.bar.buttons.workspaces.enableBorder": false,
+  "bar.workspaces.showWsIcons": false
+}
