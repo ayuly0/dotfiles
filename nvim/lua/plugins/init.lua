@@ -1,280 +1,500 @@
--- All plugins have lazy=true by default,to load a plugin on startup just lazy=false
--- List of all default plugins & their definitions
-local default_plugins = {
-
-  "nvim-lua/plenary.nvim",
-
+return {
   {
-    "NvChad/base46",
-    branch = "v2.0",
-    build = function()
-      require("base46").load_all_highlights()
-    end,
-  },
-
-  {
-    "NvChad/ui",
-    branch = "v2.0",
-    lazy = false,
-  },
-
-  {
-    "NvChad/nvterm",
-    init = function()
-      require("core.utils").load_mappings "nvterm"
-    end,
-    config = function(_, opts)
-      require "base46.term"
-      require("nvterm").setup(opts)
-    end,
-  },
-
-  {
-    "NvChad/nvim-colorizer.lua",
-    init = function()
-      require("core.utils").lazy_load "nvim-colorizer.lua"
-    end,
-    config = function(_, opts)
-      require("colorizer").setup(opts)
-
-      -- execute colorizer as soon as possible
-      vim.defer_fn(function()
-        require("colorizer").attach_to_buffer(0)
-      end, 0)
-    end,
-  },
-
-  {
-    "nvim-tree/nvim-web-devicons",
-    opts = function()
-      return { override = require "nvchad.icons.devicons" }
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "devicons")
-      require("nvim-web-devicons").setup(opts)
-    end,
-  },
-
-  {
-    "lukas-reineke/indent-blankline.nvim",
-    version = "2.20.7",
-    init = function()
-      require("core.utils").lazy_load "indent-blankline.nvim"
-    end,
-    opts = function()
-      return require("plugins.configs.others").blankline
-    end,
-    config = function(_, opts)
-      require("core.utils").load_mappings "blankline"
-      dofile(vim.g.base46_cache .. "blankline")
-      require("indent_blankline").setup(opts)
-    end,
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter",
-    init = function()
-      require("core.utils").lazy_load "nvim-treesitter"
-    end,
-    cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
-    build = ":TSUpdate",
-    opts = function()
-      return require "plugins.configs.treesitter"
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "syntax")
-      require("nvim-treesitter.configs").setup(opts)
-    end,
-  },
-
-  -- git stuff
-  {
-    "lewis6991/gitsigns.nvim",
-    ft = { "gitcommit", "diff" },
-    init = function()
-      -- load gitsigns only when a git file is opened
-      vim.api.nvim_create_autocmd({ "BufRead" }, {
-        group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
-        callback = function()
-          vim.fn.jobstart({"git", "-C", vim.loop.cwd(), "rev-parse"},
-            {
-              on_exit = function(_, return_code)
-                if return_code == 0 then
-                  vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
-                  vim.schedule(function()
-                    require("lazy").load { plugins = { "gitsigns.nvim" } }
-                  end)
-                end
-              end
-            }
-          )
-        end,
-      })
-    end,
-    opts = function()
-      return require("plugins.configs.others").gitsigns
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "git")
-      require("gitsigns").setup(opts)
-    end,
-  },
-
-  -- lsp stuff
-  {
-    "williamboman/mason.nvim",
-    cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUpdate" },
-    opts = function()
-      return require "plugins.configs.mason"
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "mason")
-      require("mason").setup(opts)
-
-      -- custom nvchad cmd to install all mason binaries listed
-      vim.api.nvim_create_user_command("MasonInstallAll", function()
-        if opts.ensure_installed and #opts.ensure_installed > 0 then
-          vim.cmd("MasonInstall " .. table.concat(opts.ensure_installed, " "))
-        end
-      end, {})
-
-      vim.g.mason_binaries_list = opts.ensure_installed
-    end,
+    "stevearc/conform.nvim",
+    event = "BufWritePre", -- uncomment for format on save
+    opts = require "configs.conform",
   },
 
   {
     "neovim/nvim-lspconfig",
-    init = function()
-      require("core.utils").lazy_load "nvim-lspconfig"
-    end,
     config = function()
-      require "plugins.configs.lspconfig"
+      require "configs.lspconfig"
     end,
   },
-
-  -- load luasnips + cmp related in insert mode only
   {
-    "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
-    dependencies = {
-      {
-        -- snippet plugin
-        "L3MON4D3/LuaSnip",
-        dependencies = "rafamadriz/friendly-snippets",
-        opts = { history = true, updateevents = "TextChanged,TextChangedI" },
-        config = function(_, opts)
-          require("plugins.configs.others").luasnip(opts)
-        end,
-      },
-
-      -- autopairing of (){}[] etc
-      {
-        "windwp/nvim-autopairs",
-        opts = {
-          fast_wrap = {},
-          disable_filetype = { "TelescopePrompt", "vim" },
-        },
-        config = function(_, opts)
-          require("nvim-autopairs").setup(opts)
-
-          -- setup cmp for autopairs
-          local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-          require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
-        end,
-      },
-
-      -- cmp sources plugins
-      {
-        "saadparwaiz1/cmp_luasnip",
-        "hrsh7th/cmp-nvim-lua",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-      },
-    },
+    "simrat39/rust-tools.nvim",
+    ft = "rust",
+    dependencies = "neovim/nvim-lspconfig",
     opts = function()
-      return require "plugins.configs.cmp"
+      return require "configs.rust-tools"
     end,
     config = function(_, opts)
-      require("cmp").setup(opts)
+      require("rust-tools").setup(opts)
     end,
   },
-
   {
-    "numToStr/Comment.nvim",
-    keys = {
-      { "gcc", mode = "n", desc = "Comment toggle current line" },
-      { "gc", mode = { "n", "o" }, desc = "Comment toggle linewise" },
-      { "gc", mode = "x", desc = "Comment toggle linewise (visual)" },
-      { "gbc", mode = "n", desc = "Comment toggle current block" },
-      { "gb", mode = { "n", "o" }, desc = "Comment toggle blockwise" },
-      { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
-    },
+    "rust-lang/rust.vim",
+    ft = "rust",
+    event = "BufWritePre",
     init = function()
-      require("core.utils").load_mappings "comment"
-    end,
-    config = function(_, opts)
-      require("Comment").setup(opts)
+      vim.g.rustfmt_autosave = 1
     end,
   },
-
-  -- file managing , picker etc
   {
-    "nvim-tree/nvim-tree.lua",
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    init = function()
-      require("core.utils").load_mappings "nvimtree"
-    end,
-    opts = function()
-      return require "plugins.configs.nvimtree"
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "nvimtree")
-      require("nvim-tree").setup(opts)
+    "edluffy/hologram.nvim",
+    -- event = "VeryLazy",
+    config = function()
+      local hologram = require "hologram"
+      hologram.setup {
+        auto_display = true,
+      }
     end,
   },
-
+  { "nvim-neotest/nvim-nio", lazy = false },
   {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
-    cmd = "Telescope",
-    init = function()
-      require("core.utils").load_mappings "telescope"
-    end,
-    opts = function()
-      return require "plugins.configs.telescope"
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "telescope")
-      local telescope = require "telescope"
-      telescope.setup(opts)
-
-      -- load extensions
-      for _, ext in ipairs(opts.extensions_list) do
-        telescope.load_extension(ext)
+    "rcarriga/nvim-dap-ui",
+    event = "VeryLazy",
+    dependencies = "mfussenegger/nvim-dap",
+    config = function()
+      local dap = require "dap"
+      local dapui = require "dapui"
+      dapui.setup()
+      dap.listeners.after.event_initialized["dapui_config"] = function()
+        dapui.open()
       end
+      dap.listeners.before.event_terminated["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+      dap.adapters.codelldb = {
+        type = "server",
+        port = "${port}",
+        executable = {
+          command = "/home/ayuly/.local/share/nvim/mason/bin/codelldb",
+          args = { "--port", "${port}" },
+        },
+      }
+      dap.configurations.cpp = {
+        {
+          name = "Launch file",
+          type = "codelldb",
+          request = "launch",
+          program = function()
+            return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+          end,
+          cwd = "${workspaceFolder}",
+          stopOnEntry = false,
+        },
+      }
+      dap.configurations.c = dap.configurations.cpp
+      dap.configurations.rust = dap.configurations.cpp
+    end,
+  },
+  {
+    "jay-babu/mason-nvim-dap.nvim",
+    ft = "python",
+    evnet = "VeryLazy",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "mfussenegger/nvim-dap",
+    },
+    opts = {
+      handlers = {},
+    },
+  },
+  { "mattn/emmet-vim", lazy = false },
+  { "neocmakelsp/neocmakelsp" },
+  { "posva/vim-vue" },
+  {
+    "nvimtools/none-ls.nvim",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require "configs.none-ls" -- move your opts here
+    end,
+  },
+  -- {
+  --   "olexsmir/gopher.nvim",
+  --   ft = "go",
+  --   config = function (_, opts)
+  --     require("gopher").setup(opts)
+  --   end,
+  --   build = function ()
+  --     vim.cmd [[slient! GoInstallDeps]]
+  --   end
+  -- },
+
+  {
+    "williamboman/mason-lspconfig.nvim",
+  },
+
+  "williamboman/mason.nvim",
+  opts = {
+    ensure_installed = {
+      "asm-lsp",
+      "rust-analyzer",
+      "clangd",
+      "clang-format",
+      "codelldb",
+      "pyright",
+      "black",
+      "debugpy",
+      "mypy",
+      "ruff",
+      "gopls",
+      "neocmakelsp",
+    },
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      ensure_installed = {
+        "asm",
+        "c",
+        "cpp",
+        "python",
+        "lua",
+        "rust",
+        "toml",
+      },
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+      },
+      ident = { enable = true },
+      rainbow = {
+        enable = true,
+        extended_mode = true,
+        max_file_lines = nil,
+      },
+    },
+  },
+  {
+    "Zeioth/compiler.nvim",
+    cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+    dependencies = { "stevearc/overseer.nvim", "nvim-telescope/telescope.nvim" },
+    opts = {},
+  },
+  {
+    "stevearc/overseer.nvim",
+    commit = "6271cab7ccc4ca840faa93f54440ffae3a3918bd",
+    cmd = { "CompilerOpen", "CompilerToggleResults", "CompilerRedo" },
+    opts = {
+      task_list = {
+        direction = "bottom",
+        min_height = 25,
+        max_height = 25,
+        default_detail = 1,
+      },
+    },
+  },
+  {
+    "kdheepak/lazygit.nvim",
+    lazy = true,
+    cmd = {
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterCurrentFile",
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+    },
+    config = function()
+      require("telescope").load_extension "lazygit"
+    end,
+  },
+  {
+    "tanvirtin/vgit.nvim",
+    dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
+    -- Lazy loading on 'VimEnter' event is necessary.
+    event = "VimEnter",
+    config = function()
+      require("vgit").setup()
     end,
   },
 
-  -- Only load whichkey after all the gui
   {
-    "folke/which-key.nvim",
-    keys = { "<leader>", "<c-r>", "<c-w>", '"', "'", "`", "c", "v", "g" },
-    init = function()
-      require("core.utils").load_mappings "whichkey"
+    "saghen/blink.cmp",
+    dependencies = { "rafamadriz/friendly-snippets" },
+
+    version = "1.*",
+    opts = {
+      keymap = { preset = "super-tab" },
+
+      appearance = {
+        use_nvim_cmp_as_default = true,
+        nerd_font_variant = "mono",
+      },
+
+      completion = {
+        documentation = { auto_show = true },
+        ghost_text = { enabled = true },
+        -- list = { selection = { preselect = true, auto_insert = true } },
+        menu = { draw = { treesitter = { "lsp" } } },
+      },
+
+      signature = { enabled = true },
+    },
+  },
+  {
+    "xiyaowong/transparent.nvim",
+    lazy = false,
+    config = function()
+      require("transparent").setup {
+        extra_groups = {
+          "NormalFloat",
+          "NvimTreeNormal",
+        },
+        exclude_groups = {},
+        -- disable nvchad autocomplete
+        require("cmp").setup {
+          sources = {},
+        },
+      }
     end,
-    cmd = "WhichKey",
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "whichkey")
-      require("which-key").setup(opts)
+  },
+  {
+    "echasnovski/mini.files",
+    version = false,
+    keys = {
+      {
+        "<leader>ee",
+        function()
+          require("mini.files").open(vim.api.nvim_buf_get_name(0), true)
+        end,
+        desc = "Open mini.files (current file's dir)",
+      },
+      {
+        "<leader>E",
+        function()
+          require("mini.files").open(vim.loop.cwd(), true)
+        end,
+        desc = "Open mini.files (cwd)",
+      },
+    },
+    config = function()
+      require("mini.files").setup {
+        -- Optional nice defaults
+        mappings = {
+          go_in = "L",
+          go_in_plus = "l",
+          go_out = "H",
+          go_out_plus = "h",
+          synchronize = "=", -- I prefer = instead of default S
+          close = "q",
+        },
+        windows = {
+          preview = true,
+          width_preview = 50,
+        },
+        options = {
+          use_as_default_explorer = true, -- This replaces netrw and makes :edit . use mini.files
+        },
+      }
+
+      -- Optional: auto-close when last window
+      vim.api.nvim_create_autocmd("User", {
+        pattern = "MiniFilesBufferCreate",
+        callback = function(args)
+          local buf_id = args.data.buf_id
+          vim.keymap.set("n", "<Esc>", function()
+            require("mini.files").close()
+          end, { buffer = buf_id })
+        end,
+      })
+    end,
+  },
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
+    ft = { "markdown" },
+    opts = {},
+    config = function()
+      require("render-markdown").setup {
+        completions = { blink = { enabled = true } },
+        heading = {
+          position = "inline",
+          enabled = true,
+          render_modes = false,
+          atx = true,
+          setext = true,
+          sign = true,
+          above = "▄",
+          below = "▀",
+          backgrounds = {
+            "RenderMarkdownH1Bg",
+            "RenderMarkdownH2Bg",
+            "RenderMarkdownH3Bg",
+            "RenderMarkdownH4Bg",
+            "RenderMarkdownH5Bg",
+            "RenderMarkdownH6Bg",
+          },
+          foregrounds = {
+            "RenderMarkdownH1",
+            "RenderMarkdownH2",
+            "RenderMarkdownH3",
+            "RenderMarkdownH4",
+            "RenderMarkdownH5",
+            "RenderMarkdownH6",
+          },
+        },
+        indent = {
+          enabled = false,
+          render_modes = false,
+          per_level = 2,
+          skip_level = 1,
+          skip_heading = false,
+          icon = "▎",
+          highlight = "RenderMarkdownIndent",
+        },
+        pipe_table = { preset = "round" },
+        bullet = { icons = { "", "" } },
+      }
+      require("render-markdown").enable()
+    end,
+  },
+  {
+    "xeluxee/competitest.nvim",
+    dependencies = "MunifTanjim/nui.nvim",
+    lazy = false,
+    config = function()
+      require("competitest").setup {
+        floating_border = "rounded",
+        floating_border_highlight = "FloatBorder",
+        compile_command = {
+          cpp = { exec = "g++", args = { "$(FNAME)", "-o", "build/$(FNOEXT)" } },
+        },
+        run_command = {
+          cpp = { exec = "./build/$(FNOEXT)" },
+        },
+        maximum_time = 1000,
+        testcases_directory = "testcases/",
+        testcases_input_file_format = "$(FNOEXT)_$(TCNUM).INP",
+        testcases_output_file_format = "$(FNOEXT)_$(TCNUM).OUT",
+        runner_ui = {
+          interface = "split",
+        },
+      }
+    end,
+  },
+  {
+    "echasnovski/mini.cursorword",
+    version = false,
+    lazy = false,
+    config = function()
+      require("mini.cursorword").setup {}
+    end,
+  },
+  {
+    "echasnovski/mini.move",
+    version = false,
+    lazy = false,
+    config = function()
+      require("mini.move").setup {}
+    end,
+  },
+  {
+    "echasnovski/mini.ai",
+    version = false,
+    lazy = false,
+    config = function()
+      require("mini.ai").setup {}
+    end,
+  },
+  {
+    "kawre/leetcode.nvim",
+    lazy = false,
+    dependencies = {
+      -- include a picker of your choice, see picker section for more details
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+    },
+    opts = {
+      editor = {
+        reset_previous_code = true, ---@type boolean
+        fold_imports = true, ---@type boolean
+      },
+      injector = {
+        ["cpp"] = {
+          imports = function()
+            return {
+              '#pragma GCC optimize("O3,unroll-loops,inline")',
+              '#pragma GCC target("avx2,bmi,bmi2,lzcnt")',
+              "#include <bits/stdc++.h>",
+              "using namespace std;",
+              "using ll = long long;",
+              "using vi = vector<int>;",
+              "using vll = vector<ll>;",
+              "#define forn(s,i,e) for(int i=s;i<e;++i)",
+              "#define all(x) (x).begin(), (x).end()",
+              "#define sz(x) int((x).size())",
+              "#define pb push_back",
+              "#define fi first",
+              "#define se second",
+              "#define vec vector",
+              "static const int _fast_io = [](){",
+              " ios::sync_with_stdio(false);",
+              " cin.tie(nullptr);",
+              " return 0;",
+              "}();",
+              "",
+              'void dbg() { cout << "\\n"; }',
+              "template <typename H, typename... T>",
+              "void dbg(H h, T... t) {",
+              ' cout << h << " ";',
+              " dbg(t...);",
+              "}",
+              "int search( vector<int> &nums, int target )",
+              "{",
+              "int l = 0, r = nums.size() - 1;",
+              "while ( l <= r )",
+              "{",
+              "int mid = ( l + r ) / 2;",
+              "if ( nums[ mid ] > target )",
+              "{",
+              "r = mid - 1;",
+              "}",
+              "else if ( nums[ mid ] < target )",
+              "{",
+              "l = mid + 1;",
+              "}",
+              "else",
+              "{",
+              "return mid;",
+              "}",
+              "}",
+              "return -1;",
+              "}",
+            }
+          end,
+          after = 'auto init = atexit([]() { ofstream("display_runtime.txt") << "0";});',
+        },
+      },
+    },
+  },
+  {
+    "rcarriga/nvim-notify",
+    lazy = false,
+    config = function()
+      require("notify").setup {
+        -- optional: customize timeouts, stages, icons, etc.
+        timeout = 5000,
+        stages = "fade",
+        background_colour = "#222222",
+      }
+      vim.notify = require "notify"
+    end,
+  },
+  {
+    "nvim-java/nvim-java",
+    dependencies = {
+      "nvim-java/lua-async-await",
+      "nvim-java/nvim-java-core",
+      "MunifTanjim/nui.nvim",
+      "neovim/nvim-lspconfig",
+      "mfussenegger/nvim-dap",
+    },
+    config = function()
+      require("java").setup()
     end,
   },
 }
-
-local config = require("core.utils").load_config()
-
-if #config.plugins > 0 then
-  table.insert(default_plugins, { import = config.plugins })
-end
-
-require("lazy").setup(default_plugins, config.lazy_nvim)
