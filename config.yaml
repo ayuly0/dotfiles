@@ -1,0 +1,50 @@
+config:
+  backup: true
+  banner: true
+  create: true
+  dotpath: dotfiles
+  keepdot: false
+  link_dotfile_default: nolink
+  link_on_import: nolink
+  longkey: false
+dotfiles:
+  f_starship.toml:
+    src: config/starship.toml
+    dst: ~/.config/starship.toml
+  d_kitty:
+    src: config/kitty
+    dst: ~/.config/kitty
+  d_tmux:
+    src: config/tmux
+    dst: ~/.config/tmux
+  d_fish:
+    src: config/fish
+    dst: ~/.config/fish
+    chmod: '700'
+  f_dolphinrc:
+    src: config/dolphinrc
+    dst: ~/.config/dolphinrc
+  d_btop:
+    src: config/btop
+    dst: ~/.config/btop
+  d_noctalia:
+    src: config/noctalia
+    dst: ~/.config/noctalia
+  d_hypr:
+    src: config/hypr
+    dst: ~/.config/hypr
+  d_zellij:
+    src: config/zellij
+    dst: ~/.config/zellij
+profiles:
+  evilcorp:
+    dotfiles:
+    - f_starship.toml
+    - d_kitty
+    - d_tmux
+    - d_fish
+    - f_dolphinrc
+    - d_btop
+    - d_noctalia
+    - d_hypr
+    - d_zellij
