@@ -128,28 +128,27 @@ alias cd=__zoxide_z
 #
 #   zoxide init fish | source
 
-function zellij_update_tabname
-    if set -q ZELLIJ
-        set current_dir $PWD
-        if test $current_dir = $HOME
-            set current_dir "~"
-        else
-            set current_dir (basename $current_dir)
+if status is-interactive
+    if type -q zellij
+        # Update the zellij tab name with the current process name or pwd.
+        function zellij_tab_name_update_pre --on-event fish_preexec
+            if set -q ZELLIJ
+                set -l cmd_line (string split " " -- $argv)
+                set -l process_name $cmd_line[1]
+                if test -n "$process_name" -a "$process_name" != "z"
+                    command nohup zellij action rename-tab $process_name >/dev/null 2>&1
+                end
+            end
         end
-        nohup zellij action rename-tab $current_dir >/dev/null 2>&1
+
+        function zellij_tab_name_update_post --on-event fish_postexec
+            if set -q ZELLIJ
+                set -l cmd_line (string split " " -- $argv)
+                set -l process_name $cmd_line[1]
+                if test "$process_name" = "cd"
+                    command nohup zellij action rename-tab (prompt_pwd) >/dev/null 2>&1
+                end
+            end
+        end
     end
 end
-
-# auto update tabe name on directory change
-#
-function __auto_zellij_update_tabname --on-variable PWD --description "Update zellij tab name on directory change"
-    zellij_update_tabname
-end
-
-set -Ux PYENV_ROOT $HOME/.pyenv
-set -U fish_user_paths $PYENV_ROOT/bin $fish_user_paths
-
-# Load pyenv automatically by appending
-# the following to ~/.config/fish/config.fish:
-
-pyenv init - fish | source
