@@ -39,6 +39,9 @@ dotfiles:
   d_nvim:
     src: config/nvim
     dst: ~/.config/nvim
+  d_quickshell:
+    src: config/quickshell
+    dst: ~/.config/quickshell
 profiles:
   evilcorp:
     dotfiles:
@@ -52,3 +55,4 @@ profiles:
     - d_hypr
     - d_zellij
     - d_nvim
+    - d_quickshell
