@@ -1,16 +1,16 @@
 layout {
     pane size=1 borderless=true {
         plugin location="file:/home/ayuly/.config/zellij/plugins/zjstatus.wasm" {
-format_left  "#[fg=#E0E0E0,bold] {mode} {tabs}"
+            format_left  "#[fg=#E0E0E0,bold] {mode} {tabs}"
             format_right "#[bg=#303030,fg=#101010] #[bg=#303030,fg=#E0E0E0,bold]{swap_layout} #[bg=#101010,fg=#303030]"
 
-            mode_locked  "#[fg=#F0F0F0,bold] {name} "
+            mode_locked  "#[fg=#F0F0F0,bold] {name} "//#[bg=#303030,fg=#101010]█"
             mode_normal  "#[fg=#E0E0E0,bold] {name} "
             mode_resize  "#[fg=#C0C0C0,bold] {name} "
 
             mode_default_to_mode "resize"
 
-            tab_normal "#[bg=#202020,fg=#B0B0B0] #[bg=#202020,fg=#B0B0B0]{name} {sync_indicator}{fullscreen_indicator}{floating_indicator} #[bg=#101010,fg=#202020]"
+            tab_normal "#[bg=#202020,fg=#101010] #[bg=#202020,fg=#B0B0B0]{name} {sync_indicator}{fullscreen_indicator}{floating_indicator} #[bg=#101010,fg=#202020]"
             tab_active "#[bg=#F0F0F0,fg=#101010] #[bg=#F0F0F0,fg=#101010,bold]{name} {sync_indicator}{fullscreen_indicator}{floating_indicator} #[bg=#101010,fg=#F0F0F0]"
 
             tab_sync_indicator       " "
@@ -22,7 +22,7 @@ format_left  "#[fg=#E0E0E0,bold] {mode} {tabs}"
     pane split_direction="vertical" {
         pane
     }
-    pane size=1 borderless=true {
-        plugin location="status-bar"
-    }
+    // pane size=1 borderless=true {
+    //     plugin location="status-bar"
+    // }
 }

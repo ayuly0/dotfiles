@@ -114,6 +114,16 @@
                     "usePrimaryColor": true
                 },
                 {
+                    "blacklist": [
+                    ],
+                    "colorizeIcons": true,
+                    "drawerEnabled": true,
+                    "hidePassive": false,
+                    "id": "Tray",
+                    "pinned": [
+                    ]
+                },
+                {
                     "hideMode": "alwaysExpanded",
                     "icon": "screenshot",
                     "id": "CustomButton",
@@ -163,16 +173,6 @@
                 {
                     "displayMode": "onhover",
                     "id": "Brightness"
-                },
-                {
-                    "blacklist": [
-                    ],
-                    "colorizeIcons": true,
-                    "drawerEnabled": true,
-                    "hidePassive": false,
-                    "id": "Tray",
-                    "pinned": [
-                    ]
                 },
                 {
                     "hideWhenZero": true,
