@@ -36,6 +36,9 @@ dotfiles:
   d_zellij:
     src: config/zellij
     dst: ~/.config/zellij
+  d_nvim:
+    src: config/nvim
+    dst: ~/.config/nvim
 profiles:
   evilcorp:
     dotfiles:
@@ -48,3 +51,4 @@ profiles:
     - d_noctalia
     - d_hypr
     - d_zellij
+    - d_nvim
