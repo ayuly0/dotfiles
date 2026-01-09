@@ -42,6 +42,18 @@ dotfiles:
   d_quickshell:
     src: config/quickshell
     dst: ~/.config/quickshell
+  f_sddm.conf:
+    src: etc/sddm.conf
+    dst: /etc/sddm.conf
+  d_silent:
+    src: usr/share/sddm/themes/silent
+    dst: /usr/share/sddm/themes/silent
+  f_face:
+    src: face
+    dst: ~/.face
+  d_wallpaper:
+    src: Wallpaper
+    dst: ~/Wallpaper
 profiles:
   evilcorp:
     dotfiles:
@@ -56,3 +68,7 @@ profiles:
     - d_zellij
     - d_nvim
     - d_quickshell
+    - f_sddm.conf
+    - d_silent
+    - f_face
+    - d_wallpaper
