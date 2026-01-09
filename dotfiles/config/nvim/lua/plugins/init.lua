@@ -134,6 +134,16 @@ return {
       "ruff",
       "gopls",
       "neocmakelsp",
+      "ada-language-server",
+      "asmfmt",
+      "lua-language-server",
+      "prettier",
+      "qmlls",
+      "slint-lsp",
+      "stylua",
+      "tailwindcss-language-server",
+      "typescript-language-server",
+      "vetur-vls",
     },
   },
   {
@@ -143,6 +153,8 @@ return {
         "asm",
         "c",
         "cpp",
+        "go",
+        "qml",
         "python",
         "lua",
         "rust",
@@ -252,7 +264,7 @@ return {
         on_clear = function() end,
       }
       -- require('transparent').clear_prefix('BufferLine')
-      require('transparent').clear_prefix('NeoTree')
+      require("transparent").clear_prefix "NeoTree"
     end,
   },
   {
