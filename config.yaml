@@ -54,6 +54,13 @@ dotfiles:
   d_wallpaper:
     src: Wallpaper
     dst: ~/Wallpaper
+  d_fcitx5:
+    src: config/fcitx5
+    dst: ~/.config/fcitx5
+    chmod: '700'
+  d_haruna:
+    src: config/haruna
+    dst: ~/.config/haruna
 profiles:
   evilcorp:
     dotfiles:
@@ -72,3 +79,5 @@ profiles:
     - d_silent
     - f_face
     - d_wallpaper
+    - d_fcitx5
+    - d_haruna
