@@ -1,0 +1,12 @@
+{
+  "notes": [
+    {
+      "id": "1769264296895",
+      "title": "READ THIS AFTER EXAM",
+      "content": "Hey Ayuly,\n\nExams are finally over — congrats, you survived.\nRemember how motivated you were about getting good at pwn, heap exploits, malware reversing, IoT firmware, kernel stuff?\nDon't let it die again.\n\nStart **today** with the stupid-small version:\n- Create/open the exploit-lab GitHub repo\n- Set the phone wallpaper checklist (or just do the items below)\n- Touch one tool for literally 1–5 minutes: gdb, Ghidra, Binwalk, Volatility, QEMU...\n- Write one sentence in the daily note: \"Restarted – looked at ___\"\n\nCore reminders:\n- Systems thinking: How does X interact with memory/OS/hardware?\n- Debugging mindset: Every crash = puzzle\n- Iteration: One problem → 10 variants\n- Ethical: Isolated VMs only\n- Lab: Dual-boot, QEMU, tools installed\n\nYou already know the session ritual and checklist — just follow the micro version first.\nYou've got this. Tiny steps every day = real skill in 3–6 months.\n\nStart now. Open the repo/tool/note. 5 minutes. Go.",
+      "modifiedAt": "2026-01-24T14:18:26.935Z"
+    }
+  ],
+  "showCountInBar": true,
+  "count": 1
+}

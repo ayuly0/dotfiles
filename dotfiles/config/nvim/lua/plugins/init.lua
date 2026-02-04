@@ -154,7 +154,7 @@ return {
         "c",
         "cpp",
         "go",
-        "qml",
+        "qmljs",
         "python",
         "lua",
         "rust",

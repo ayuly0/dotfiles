@@ -1,0 +1,13 @@
+{
+  "username": "ayuly0",
+  "token": "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",
+  "refreshInterval": 1800,
+  "maxEvents": 50,
+  "showStars": true,
+  "showForks": true,
+  "showPRs": true,
+  "showRepoCreations": true,
+  "showMyRepoStars": true,
+  "showMyRepoForks": true,
+  "openInBrowser": true
+}

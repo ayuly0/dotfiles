@@ -1,0 +1,143 @@
+{
+  "todos": [
+    {
+      "id": 1770121593797,
+      "text": "fix the checkout damn thing",
+      "completed": false,
+      "createdAt": "2026-02-03T12:26:33.797Z",
+      "pageId": 1,
+      "priority": "high",
+      "details": ""
+    },
+    {
+      "id": 1769788613931,
+      "text": "fix blog protection",
+      "completed": false,
+      "createdAt": "2026-01-30T15:56:53.931Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769694492050,
+      "text": "server restart didnt work with exist beacon",
+      "completed": false,
+      "createdAt": "2026-01-29T13:48:12.050Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769435152472,
+      "text": "[Task] ID: c Cmd: 77792556\n[-] Unknown command: 77792556\n[+] Response sent for Task c\n[*] Sleeping...",
+      "completed": false,
+      "createdAt": "2026-01-26T13:45:52.472Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769434078949,
+      "text": "make agent response unkown tho",
+      "completed": false,
+      "createdAt": "2026-01-26T13:27:58.949Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769434066461,
+      "text": "fix agent unknown command",
+      "completed": false,
+      "createdAt": "2026-01-26T13:27:46.461Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769434031137,
+      "text": "fix id task",
+      "completed": false,
+      "createdAt": "2026-01-26T13:27:11.137Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769258747449,
+      "text": "1:38",
+      "completed": false,
+      "createdAt": "2026-01-24T12:45:47.449Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769247646395,
+      "text": "remove debug at 222 http.go",
+      "completed": true,
+      "createdAt": "2026-01-24T09:40:46.395Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769840969418,
+      "text": "fix client builder",
+      "completed": true,
+      "createdAt": "2026-01-31T06:29:29.418Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769959541058,
+      "text": "make docs about plugin stuff",
+      "completed": true,
+      "createdAt": "2026-02-01T15:25:41.058Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769701531322,
+      "text": "fix action build of client",
+      "completed": true,
+      "createdAt": "2026-01-29T15:45:31.322Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    },
+    {
+      "id": 1769434052189,
+      "text": "fix client dont use built-in command",
+      "completed": true,
+      "createdAt": "2026-01-26T13:27:32.189Z",
+      "pageId": 0,
+      "priority": "medium",
+      "details": ""
+    }
+  ],
+  "count": 12,
+  "completedCount": 5,
+  "showCompleted": true,
+  "showBackground": true,
+  "pages": [
+    {
+      "id": 0,
+      "name": "General"
+    },
+    {
+      "id": 1,
+      "name": "Dev"
+    }
+  ],
+  "current_page_id": 1,
+  "isExpanded": false,
+  "useCustomColors": false,
+  "priorityColors": {
+    "high": "#dddddd",
+    "medium": "#aaaaaa",
+    "low": "#5d5d5d"
+  }
+}

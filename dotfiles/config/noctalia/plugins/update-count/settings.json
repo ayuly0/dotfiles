@@ -3,6 +3,6 @@
   "updateTerminalCommand": "kitty -e",
   "currentIconName": "world-download",
   "hideOnZero": true,
-  "customCmdGetNumUpdates": "",
-  "customCmdDoSystemUpdate": ""
+  "customCmdGetNumUpdates": "yay -Quq --ignore dolphin 2>/dev/null | wc -l",
+  "customCmdDoSystemUpdate": "yay -Syu --ignore dolphin"
 }

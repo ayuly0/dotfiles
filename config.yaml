@@ -61,6 +61,9 @@ dotfiles:
   d_haruna:
     src: config/haruna
     dst: ~/.config/haruna
+  d_hyprquickshot:
+    src: config/quickshell/hyprquickshot
+    dst: ~/.config/quickshell/hyprquickshot
 profiles:
   evilcorp:
     dotfiles:
@@ -81,3 +84,4 @@ profiles:
     - d_wallpaper
     - d_fcitx5
     - d_haruna
+    - d_hyprquickshot
